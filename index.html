@@ -140,7 +140,7 @@
   <header>
     <img src="https://github.com/abbas-bachari.png" alt="Avatar" class="avatar">
     <h1>عباس بچاری</h1>
-    <p>توسعه‌دهنده پایتون، عاشق ساخت ابزارهای هوشمند، اتوماسیون و پروژه‌های متن‌باز</p>
+    <p class="title">توسعه‌دهنده پایتون، عاشق ساخت ابزارهای هوشمند، اتوماسیون و پروژه‌های متن‌باز</p>
     <!-- <button class="toggle-theme" onclick="toggleTheme()">تغییر حالت شب/روز</button> -->
   </header>
 
@@ -157,13 +157,23 @@
           const card = document.createElement("div");
           card.className = "card";
           card.style.animationDelay = `${index * 0.1}s`;
+          const date = new Date(repo.updated_at);
+
+          // خروجی toISOString: "2025-09-11T17:13:00.000Z"
+          // date.toLocaleString('fa-IR')
+          const iso =date.toISOString() 
+            .replace('T', ' ')        // حذف T و جایگزینی با فاصله
+            .replace(/\.\d{3}Z$/, ''); // حذف میلی‌ثانیه و Z
+
+
           card.innerHTML = `
             <a href="${repo.html_url}" target="_blank">
               <div class="title">${repo.name}</div>
               <div class="desc">${repo.description || "بدون توضیح"}</div>
               <div class="meta">
                 ⭐ ${repo.stargazers_count} | 🍴 ${repo.forks_count} | 🧠 ${repo.language || "نامشخص"}<br>
-                📅 آخرین بروزرسانی: ${new Date(repo.updated_at).toLocaleDateString('fa-IR')}
+                📅 Last Update: ${iso.replace(/-/g, '/')
+}
               </div>
             </a>
           `;
